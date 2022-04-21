@@ -20,11 +20,11 @@ function completedItem(element) {
 }
 
 // Adiciona item na lista de tarefas
-function adicionarTarefa() {
-  const tarefa = textoTarefa.value;
-  if (tarefa.length > 0) {
+function addTask() {
+  const task = textoTarefa.value;
+  if (task.length > 0) {
     const listItem = document.createElement('li');
-    listItem.innerText = tarefa;
+    listItem.innerText = task;
     listItem.onclick = () => selectedItem(listItem);
     listItem.ondblclick = () => completedItem(listItem);
 
@@ -33,4 +33,26 @@ function adicionarTarefa() {
   }
 }
 
-criaTarefa.onclick = adicionarTarefa;
+criaTarefa.onclick = addTask;
+
+// Limpa todas as tarefas da lista
+function cleanAllTasks() {
+  const tasks = document.querySelectorAll('#lista-tarefas li');
+  for (let index = 0; index < tasks.length; index += 1) {
+    listaTarefas.removeChild(tasks[index]);
+  }
+}
+
+const apagaTudo = document.getElementById('apaga-tudo');
+apagaTudo.onclick = cleanAllTasks;
+
+// Remove todas as tarefas finalizadas
+function removeCompletedTask() {
+  const completedTask = document.querySelectorAll('.completed');
+  for (let index = 0; index < completedTask.length; index += 1) {
+    listaTarefas.removeChild(completedTask[index]);
+  }
+}
+
+const apagaTarefaCompleta = document.getElementById('remover-finalizados');
+apagaTarefaCompleta.onclick = removeCompletedTask;
