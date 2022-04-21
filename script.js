@@ -20,9 +20,9 @@ function completedItem(element) {
 }
 
 // Adiciona item na lista de tarefas
-function addTask() {
-  const task = textoTarefa.value;
-  if (task.length > 0) {
+function addTask(onload = false) {
+  let task = textoTarefa.value;
+  if (task.length > 0 || onload) {
     const listItem = document.createElement('li');
     listItem.innerText = task;
     listItem.onclick = () => selectedItem(listItem);
@@ -30,6 +30,7 @@ function addTask() {
 
     listaTarefas.appendChild(listItem);
     textoTarefa.value = '';
+    return listItem;
   }
 }
 
@@ -56,3 +57,38 @@ function removeCompletedTask() {
 
 const apagaTarefaCompleta = document.getElementById('remover-finalizados');
 apagaTarefaCompleta.onclick = removeCompletedTask;
+
+// Salva tarefas no localstorage
+function saveTasks() {
+  if (typeof Storage == 'undefined') {
+    alert('Sem suporte a Web Storage!');
+    return;
+  }
+
+  const tasks = document.querySelectorAll('#lista-tarefas li');
+  let savedTasks = [];
+  for (let index = 0; index < tasks.length; index += 1) {
+    const listItem = tasks[index];
+    savedTasks.push([listItem.className, listItem.innerText]);
+  }
+  localStorage.setItem('tasks', JSON.stringify(savedTasks));
+}
+
+const salvaTarefas = document.getElementById('salvar-tarefas');
+salvaTarefas.onclick = saveTasks;
+
+// Verifica se tarefas foram salvas e então as aplica a lista de tarefas
+function restoreTasks() {
+  if (localStorage.tasks === undefined) return;
+  const restoredTasks = JSON.parse(localStorage.getItem('tasks'));
+
+  for (let index = 0; index < restoredTasks.length; index += 1) {
+    const listData = restoredTasks[index];
+
+    const listItem = addTask(true);
+    listItem.className = listData[0];
+    listItem.innerText = listData[1];
+  }
+}
+
+window.onload = restoreTasks;
