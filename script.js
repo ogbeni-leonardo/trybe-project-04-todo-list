@@ -92,3 +92,37 @@ function restoreTasks() {
 }
 
 window.onload = restoreTasks;
+
+// Subindo a posição do item selecionado na lista com  a ação do botão
+function up() {
+  const selectedItem = document.querySelector('.selected-item');
+  if (selectedItem === null || selectedItem === undefined) return;
+  const parent = selectedItem.parentNode;
+  if (parent.firstChild === selectedItem) return;
+  parent.insertBefore(selectedItem, selectedItem.previousSibling);
+}
+
+const moverCima = document.getElementById('mover-cima');
+moverCima.onclick = up;
+
+// Descendo a posição do item selecionado na lista com  a ação do botão
+function down() {
+  const selectedItem = document.querySelector('.selected-item');
+  if (selectedItem === null || selectedItem === undefined) return;
+  const parent = selectedItem.parentNode;
+  if (parent.lastChild === selectedItem) return;
+  parent.insertBefore(
+    selectedItem,
+    selectedItem.nextElementSibling.nextElementSibling
+  );
+}
+
+const moverBaixo = document.getElementById('mover-baixo');
+moverBaixo.onclick = down;
+
+// Apaga item selecionado
+const removeSelecionado = document.getElementById('remover-selecionado');
+removeSelecionado.onclick = () => {
+  const selectedItem = document.querySelector('.selected-item');
+  selectedItem.parentElement.removeChild(selectedItem);
+};
