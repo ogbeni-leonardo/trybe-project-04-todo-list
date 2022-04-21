@@ -10,6 +10,15 @@ function selectedItem(element) {
   element.classList.add('selected-item');
 }
 
+// Se for clicado duas vezes ele será marcado como completo
+function completedItem(element) {
+  if (element.className.includes('completed')) {
+    element.classList.remove('completed');
+    return;
+  }
+  element.classList.add('completed');
+}
+
 // Adiciona item na lista de tarefas
 function adicionarTarefa() {
   const tarefa = textoTarefa.value;
@@ -17,6 +26,7 @@ function adicionarTarefa() {
     const listItem = document.createElement('li');
     listItem.innerText = tarefa;
     listItem.onclick = () => selectedItem(listItem);
+    listItem.ondblclick = () => completedItem(listItem);
 
     listaTarefas.appendChild(listItem);
     textoTarefa.value = '';
