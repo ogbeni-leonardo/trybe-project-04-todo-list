@@ -2,9 +2,12 @@ const listaTarefas = document.getElementById('lista-tarefas');
 const textoTarefa = document.getElementById('texto-tarefa');
 const criaTarefa = document.getElementById('criar-tarefa');
 
-// Altera a cor de fundo das li's ao clicar sobre elas
-function listBackgroundColor(element) {
-  element.style.backgroundColor = 'gray';
+// Altera a classe da  li ao clicar sobre ela
+function selectedItem(element) {
+  const selected = document.querySelector('.selected-item');
+  if (selected) selected.classList.remove('selected-item');
+
+  element.classList.add('selected-item');
 }
 
 // Adiciona item na lista de tarefas
@@ -13,7 +16,7 @@ function adicionarTarefa() {
   if (tarefa.length > 0) {
     const listItem = document.createElement('li');
     listItem.innerText = tarefa;
-    listItem.onclick = () => listBackgroundColor(listItem);
+    listItem.onclick = () => selectedItem(listItem);
 
     listaTarefas.appendChild(listItem);
     textoTarefa.value = '';
