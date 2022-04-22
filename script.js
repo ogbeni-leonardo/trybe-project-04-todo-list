@@ -140,5 +140,7 @@ const removeSelecionado = document.getElementById('remover-selecionado');
 
 removeSelecionado.onclick = () => {
   const selectedItemToRemove = document.querySelector('.selected-item');
-  selectedItemToRemove.parentElement.removeChild(selectedItemToRemove);
+  if (selectedItemToRemove) {
+    selectedItemToRemove.parentElement.removeChild(selectedItemToRemove);
+  }
 };
